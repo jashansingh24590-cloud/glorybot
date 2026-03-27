@@ -10,16 +10,16 @@
         .box { background: #1a1a1a; padding: 30px 20px; border-radius: 15px; border: 1px solid #333; margin-top: 30px; }
         input, select { width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #000; color: #fff; font-size: 16px; text-align: center; }
         #step2, #mainPanel { display: none; }
-        
-        /* Panel Style */
         .guild-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; text-align: left; margin-bottom: 15px; }
         .guild-img { width: 55px; height: 55px; background: #f0ad4e; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 10px #f0ad4e; }
         .panel-area { background: #161b22; border-radius: 15px; padding: 15px; border: 1px solid #30363d; }
         .bot-card { background: #0d1117; border-radius: 10px; padding: 15px; text-align: left; border: 1px solid #30363d; }
-        .btn { background: #ffcc00; color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; font-size: 15px; margin-top: 10px; }
+        .btn { background: #ffcc00; color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; font-size: 15px; margin-top: 10px; transition: 0.3s; }
+        .btn:disabled { background: #444; color: #888; cursor: not-allowed; }
         .status-online { color: #3fb950; font-weight: bold; font-size: 14px; margin-bottom: 10px; display: block; }
         .glory-num { font-size: 32px; color: #f85149; font-weight: bold; margin: 10px 0; }
         .dot { height: 10px; width: 10px; background-color: #3fb950; border-radius: 50%; display: inline-block; margin-right: 5px; box-shadow: 0 0 8px #3fb950; }
+        .credit-box { color: #ffcc00; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
     </style>
 </head>
 <body>
@@ -55,12 +55,16 @@
         <div class="panel-area">
             <div style="text-align: left; color: #58a6ff; font-size: 14px; margin-bottom: 10px; font-weight: bold;">MY ACTIVE GROUPS <span style="float:right; color:#f85149">Refresh ↺</span></div>
             <div class="bot-card">
-                <span class="status-online"><span class="dot"></span> RUNNING (ONLINE)</span>
-                <p style="font-size: 12px; color: #8b949e; margin: 5px 0;">Credits: <span id="creditVal">0</span>/1</p>
-                <button id="adBtn" class="btn" style="background: #58a6ff; color: white;" onclick="watchAd()">WATCH AD FOR CREDITS</button>
+                <span id="statusTxt" class="status-online" style="color: #f85149;"><span class="dot" style="background:#f85149"></span> OFFLINE (CREDITS NEEDED)</span>
+                
+                <div class="credit-box">CREDITS: <span id="creditVal">0</span>/5</div>
+                
+                <button id="adBtn" class="btn" style="background: #58a6ff; color: white;" onclick="watchAd()">WATCH AD FOR 1 CREDIT</button>
+                
                 <div class="glory-num">TOTAL GLORY: <span id="gloryCount">0</span></div>
+                
                 <div style="display: flex; gap: 10px;">
-                    <button id="startBtn" class="btn" style="background: #ffcc00; opacity: 0.5;" disabled onclick="startBot()">START</button>
+                    <button id="startBtn" class="btn" disabled onclick="startBot()">START BOT</button>
                     <button class="btn" style="background: #30363d; color: white;" onclick="location.reload()">STOP</button>
                 </div>
             </div>
@@ -69,38 +73,52 @@
 </div>
 
 <script>
+    let currentCredits = 0;
+
     function checkPass() {
-        let p = document.getElementById('passInput').value;
-        if(p === "rocck31") {
+        if(document.getElementById('passInput').value === "rocck31") {
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
-        } else {
-            alert("Wrong Password!");
-        }
+        } else { alert("Wrong Password!"); }
     }
 
     function showPanel() {
         let id = document.getElementById('guildInput').value;
-        let reg = document.getElementById('regionSelect').value;
         if(id.length < 5) { alert("Enter Valid Guild ID!"); return; }
         document.getElementById('step2').style.display = 'none';
         document.getElementById('mainPanel').style.display = 'block';
         document.getElementById('displayID1').innerText = "GUILD: " + id;
-        document.getElementById('displayRegion').innerText = reg;
+        document.getElementById('displayRegion').innerText = document.getElementById('regionSelect').value;
     }
 
     function watchAd() {
+        // Adsterra Link khulega
         window.open("https://www.profitablecpmratenetwork.com/p5s7vaxh?key=f93ff42ae54f7959783331fe87345820", "_blank");
-        document.getElementById('creditVal').innerText = "1";
-        document.getElementById('startBtn').style.opacity = "1";
-        document.getElementById('startBtn').disabled = false;
-        document.getElementById('adBtn').innerText = "CREDITS ADDED ✅";
-        document.getElementById('adBtn').disabled = true;
+        
+        // Credit badhao
+        if(currentCredits < 5) {
+            currentCredits++;
+            document.getElementById('creditVal').innerText = currentCredits;
+        }
+
+        // Agar 5 poore ho gaye toh Start button kholo
+        if(currentCredits >= 5) {
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('startBtn').style.background = "#ffcc00";
+            document.getElementById('adBtn').innerText = "5/5 CREDITS COLLECTED ✅";
+            document.getElementById('adBtn').disabled = true;
+            document.getElementById('statusTxt').style.color = "#ffcc00";
+            document.getElementById('statusTxt').innerText = "● READY TO START";
+        }
     }
 
     function startBot() {
+        document.getElementById('statusTxt').innerText = "● RUNNING (ONLINE)";
+        document.getElementById('statusTxt').style.color = "#3fb950";
+        document.querySelector('.dot').style.background = "#3fb950";
+        
         let glory = 0;
-        // 1 minute mein 50 glory (60s / 50 = approx 1.2s per glory)
+        // 1.2s per glory = 50 glory in 60s
         setInterval(() => {
             glory += 1;
             document.getElementById('gloryCount').innerText = glory;
