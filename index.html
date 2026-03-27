@@ -1,63 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>GLORY BOT PANEL</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FF Glory Bot Panel</title>
     <style>
-        body { background: #000; color: #0f0; font-family: sans-serif; text-align: center; padding: 20px; }
-        .box { border: 2px solid #0f0; padding: 20px; border-radius: 10px; max-width: 320px; margin: auto; background: #111; box-shadow: 0 0 15px #0f0; }
-        input { padding: 12px; margin: 10px 0; width: 85%; background: #000; border: 1px solid #0f0; color: #0f0; border-radius: 5px; outline: none; }
-        button { padding: 12px; background: #0f0; color: #000; border: none; cursor: pointer; font-weight: bold; width: 92%; border-radius: 5px; margin-top: 10px; }
-        #status { color: yellow; margin-top: 20px; font-size: 14px; border-top: 1px dashed #444; padding-top: 10px; }
+        body { background-color: #0d0d0d; color: white; font-family: sans-serif; margin: 0; padding: 20px 10px; text-align: center; }
+        .container { max-width: 420px; margin: auto; }
+
+        /* Guild Info Section */
+        .guild-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; text-align: left; margin-bottom: 15px; }
+        .guild-img { width: 55px; height: 55px; background: #f0ad4e; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 15px #f0ad4e; }
+        .guild-name { font-size: 18px; font-weight: bold; color: #ffcc00; }
+        .lvl-tag { background: #ffcc00; color: black; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; vertical-align: middle; }
+        .guild-stats { font-size: 11px; color: #8b949e; margin-top: 4px; }
+
+        /* Main Panel Area */
+        .panel-area { background: #161b22; border-radius: 15px; padding: 15px; border: 1px solid #30363d; }
+        .title-row { display: flex; justify-content: space-between; color: #58a6ff; font-size: 14px; margin-bottom: 15px; font-weight: bold; }
+        
+        .bot-card { background: #0d1117; border-radius: 10px; padding: 15px; text-align: left; border: 1px solid #30363d; margin-bottom: 10px; }
+        .btn { background: #ffcc00; color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        .btn:active { transform: scale(0.95); }
+
+        /* Running Elements */
+        #runningSection { display: none; }
+        .dot { height: 10px; width: 10px; background-color: #238636; border-radius: 50%; display: inline-block; margin-right: 5px; box-shadow: 0 0 8px #238636; }
+        .glory-num { font-size: 32px; color: #f85149; font-weight: bold; margin: 15px 0; text-shadow: 0 0 10px rgba(248,81,73,0.3); }
     </style>
 </head>
 <body>
-    <div id="loginPage" class="box">
-        <h2 style="color:red">SYSTEM LOCKED</h2>
-        <p>Enter Key:</p>
-        <input type="text" id="pass" placeholder="Hint: rock31">
-        <button onclick="check()">UNLOCK PANEL</button>
+
+<div class="container">
+    <div class="guild-card">
+        <div class="guild-img">🐯</div>
+        <div class="guild-info">
+            <span class="guild-name">TEAM LEGENDS</span> <span class="lvl-tag">LV.3</span>
+            <div class="guild-stats">ID: 3046091647 | IND | 1 BOTS</div>
+            <div style="font-size: 11px; margin-top: 5px;">
+                MEMBERS: <span style="color:white">19/40</span> &nbsp; CAPTAIN: <span style="color:#ffcc00">5780517768</span>
+            </div>
+        </div>
     </div>
 
-    <div id="mainPage" class="box" style="display:none;">
-        <h2 style="color:lime">GLORY PANEL ACTIVE</h2>
-        <p>Credits: <span id="crd">0</span> | Tasks: 6/6</p>
-        <input type="number" id="uid" placeholder="Enter Guild UID">
-        <select id="reg" style="width:92%; padding:10px; background:#000; color:#0f0; border:1px solid #0f0; margin-bottom:10px;">
-            <option>INDIA (IND)</option>
-            <option>PAKISTAN (PAK)</option>
-            <option>BANGLADESH (BD)</option>
-        </select>
-        <button onclick="start()" style="background:red; color:white;">DEPLOY 4 BOTS (5 CR)</button>
-        <button onclick="getAd()" style="background:blue; color:white;">WATCH AD (+1 CREDIT)</button>
-        <div id="status">Status: Waiting for Command...</div>
-    </div>
+    <div class="panel-area">
+        <div class="title-row">
+            <span>MY ACTIVE GROUPS</span>
+            <span style="color: #f85149; cursor: pointer;">Refresh ↺</span>
+        </div>
 
-    <script>
-        function check() {
-            var p = document.getElementById("pass").value;
-            if (p === "rock31") {
-                document.getElementById("loginPage").style.display = "none";
-                document.getElementById("mainPage").style.display = "block";
-            } else { alert("Access Denied! Password galat hai."); }
-        }
-        var credits = 0;
-        function getAd() {
-        https://www.profitablecpmratenetwork.com/p5s7vaxh?key=f93ff42ae54f7959783331fe87345820
-            credits++;
-            document.getElementById("crd").innerHTML = credits;
-        }
-        function start() {
-            var u = document.getElementById("uid").value;
-            if(u == "") { alert("UID Dalo!"); return; }
-            if(credits < 5) { alert("Kam se kam 5 Credits chahiye!"); return; }
-            credits -= 5;
-            document.getElementById("crd").innerHTML = credits;
-            document.getElementById("status").innerHTML = "🔍 Scanning Server for UID: " + u;
-            setTimeout(() => { document.getElementById("status").innerHTML = "🛰️ Packets Sent... Waiting for Response"; }, 2000);
-            setTimeout(() => { document.getElementById("status").innerHTML = "✅ SUCCESS: 4 Bots Joined!"; }, 5000);
-        }
-    </script>
+        <div id="startSection">
+            <div class="bot-card">
+                <p style="margin:0; font-size: 14px;">Status: <span style="color:#ffcc00">Bot Offline</span></p>
+                <p style="font-size: 11px; color: #8b949e; margin-top: 5px;">Watch Ad to activate high-speed glory bot</p>
+            </div>
+            <button class="btn" onclick="activateBot()">WATCH AD TO START BOT</button>
+        </div>
+
+        <div id="runningSection">
+            <div class="bot-card">
+                <p style="margin:0; font-size: 15px; color: #58a6ff;">14496369049</p>
+                <p style="font-size: 11px; color: #8b949e;">Clan: 3046091647 | Region: IND</p>
+                <hr style="border: 0.5px solid #30363d; margin: 10px 0;">
+                <p style="color: #3fb950; font-size: 14px; font-weight: bold;"><span class="dot"></span> RUNNING</p>
+                <div class="glory-num">TOTAL GLORY: <span id="gloryCount">0</span></div>
+                <p style="font-size: 12px; color: #8b949e;">UPTIME: <span id="uptime">0m</span></p>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button class="btn" style="background: #f85149; color: white;">RESTART</button>
+                    <button class="btn" style="background: #30363d; color: white;">STOP</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function activateBot() {
+        // Your Adsterra Link
+        window.open("https://www.profitablecpmratenetwork.com/p5s7vaxh?key=f93ff42ae54f7959783331fe87345820", "_blank");
+
+        // Change View
+        document.getElementById('startSection').style.display = 'none';
+        document.getElementById('runningSection').style.display = 'block';
+
+        // Glory Counter Logic
+        let glory = 0;
+        let time = 0;
+        setInterval(() => {
+            glory += Math.floor(Math.random() * 40) + 20;
+            document.getElementById('gloryCount').innerText = glory;
+        }, 2500);
+
+        setInterval(() => {
+            time++;
+            document.getElementById('uptime').innerText = time + "m";
+        }, 60000);
+    }
+</script>
+
 </body>
 </html>
-
