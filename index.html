@@ -3,26 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Glory Bot Panel</title>
+    <title>FF Glory Bot 2026</title>
     <style>
         body { background-color: #0d0d0d; color: white; font-family: sans-serif; margin: 0; padding: 15px; text-align: center; }
         .container { max-width: 420px; margin: auto; }
+        .box { background: #1a1a1a; padding: 30px 20px; border-radius: 15px; border: 1px solid #333; margin-top: 30px; }
+        input, select { width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #000; color: #fff; font-size: 16px; text-align: center; }
+        #step2, #mainPanel { display: none; }
         
-        /* Entry Page */
-        .entry-box { background: #1a1a1a; padding: 30px 20px; border-radius: 15px; border: 1px solid #333; margin-top: 50px; }
-        input { width: 90%; padding: 12px; margin: 15px 0; border-radius: 8px; border: 1px solid #444; background: #000; color: #fff; text-align: center; font-size: 16px; }
-        
-        /* Main Panel (Image Jaisa) */
-        #mainPanel { display: none; }
+        /* Panel Style */
         .guild-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; text-align: left; margin-bottom: 15px; }
         .guild-img { width: 55px; height: 55px; background: #f0ad4e; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 10px #f0ad4e; }
-        .guild-name { font-size: 18px; font-weight: bold; color: #ffcc00; }
-        .lvl-tag { background: #ffcc00; color: black; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
-        
         .panel-area { background: #161b22; border-radius: 15px; padding: 15px; border: 1px solid #30363d; }
         .bot-card { background: #0d1117; border-radius: 10px; padding: 15px; text-align: left; border: 1px solid #30363d; }
         .btn { background: #ffcc00; color: black; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; cursor: pointer; font-size: 15px; margin-top: 10px; }
-        
         .status-online { color: #3fb950; font-weight: bold; font-size: 14px; margin-bottom: 10px; display: block; }
         .glory-num { font-size: 32px; color: #f85149; font-weight: bold; margin: 10px 0; }
         .dot { height: 10px; width: 10px; background-color: #3fb950; border-radius: 50%; display: inline-block; margin-right: 5px; box-shadow: 0 0 8px #3fb950; }
@@ -31,9 +25,20 @@
 <body>
 
 <div class="container">
-    <div id="entryPage" class="entry-box">
-        <h2 style="color: #ffcc00; margin-top: 0;">GUILD BOT 2026</h2>
+    <div id="step1" class="box">
+        <h2 style="color: #ffcc00;">LOGIN BOT</h2>
+        <input type="password" id="passInput" placeholder="Enter Password">
+        <button class="btn" onclick="checkPass()">LOGIN</button>
+    </div>
+
+    <div id="step2" class="box">
+        <h2 style="color: #ffcc00;">BOT SETTINGS</h2>
         <input type="number" id="guildInput" placeholder="Enter Guild ID">
+        <select id="regionSelect">
+            <option value="INDIA">INDIA</option>
+            <option value="PAKISTAN">PAKISTAN</option>
+            <option value="BANGLADESH">BANGLADESH</option>
+        </select>
         <button class="btn" onclick="showPanel()">ADD BOT</button>
     </div>
 
@@ -41,9 +46,9 @@
         <div class="guild-card">
             <div class="guild-img">🐯</div>
             <div class="guild-info">
-                <span class="guild-name">TEAM LEGENDS</span> <span class="lvl-tag">LV.3</span>
-                <div style="font-size: 11px; color: #8b949e; margin-top: 4px;">ID: <span id="displayID"></span> | IND | 1 BOTS</div>
-                <div style="font-size: 11px; margin-top: 5px;">MEMBERS: 19/40 | CAPTAIN: 5780517768</div>
+                <span class="guild-name" id="displayID1" style="color:#ffcc00; font-weight:bold; font-size:18px;"></span>
+                <div style="font-size: 11px; color: #8b949e; margin-top: 4px;">Region: <span id="displayRegion"></span> | 1 BOTS</div>
+                <div style="font-size: 11px; margin-top: 5px;">STATUS: <span style="color:#3fb950">VERIFIED</span></div>
             </div>
         </div>
 
@@ -52,11 +57,8 @@
             <div class="bot-card">
                 <span class="status-online"><span class="dot"></span> RUNNING (ONLINE)</span>
                 <p style="font-size: 12px; color: #8b949e; margin: 5px 0;">Credits: <span id="creditVal">0</span>/1</p>
-                
                 <button id="adBtn" class="btn" style="background: #58a6ff; color: white;" onclick="watchAd()">WATCH AD FOR CREDITS</button>
-                
                 <div class="glory-num">TOTAL GLORY: <span id="gloryCount">0</span></div>
-                
                 <div style="display: flex; gap: 10px;">
                     <button id="startBtn" class="btn" style="background: #ffcc00; opacity: 0.5;" disabled onclick="startBot()">START</button>
                     <button class="btn" style="background: #30363d; color: white;" onclick="location.reload()">STOP</button>
@@ -67,19 +69,28 @@
 </div>
 
 <script>
+    function checkPass() {
+        let p = document.getElementById('passInput').value;
+        if(p === "rocck31") {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+        } else {
+            alert("Wrong Password!");
+        }
+    }
+
     function showPanel() {
         let id = document.getElementById('guildInput').value;
-        if(id.length < 5) { alert("Sahi ID dalo bhai!"); return; }
-        document.getElementById('entryPage').style.display = 'none';
+        let reg = document.getElementById('regionSelect').value;
+        if(id.length < 5) { alert("Enter Valid Guild ID!"); return; }
+        document.getElementById('step2').style.display = 'none';
         document.getElementById('mainPanel').style.display = 'block';
-        document.getElementById('displayID').innerText = id;
+        document.getElementById('displayID1').innerText = "GUILD: " + id;
+        document.getElementById('displayRegion').innerText = reg;
     }
 
     function watchAd() {
-        // Adsterra Link
         window.open("https://www.profitablecpmratenetwork.com/p5s7vaxh?key=f93ff42ae54f7959783331fe87345820", "_blank");
-        
-        // Credits update
         document.getElementById('creditVal').innerText = "1";
         document.getElementById('startBtn').style.opacity = "1";
         document.getElementById('startBtn').disabled = false;
@@ -89,14 +100,14 @@
 
     function startBot() {
         let glory = 0;
+        // 1 minute mein 50 glory (60s / 50 = approx 1.2s per glory)
         setInterval(() => {
-            glory += Math.floor(Math.random() * 60) + 30;
+            glory += 1;
             document.getElementById('gloryCount').innerText = glory;
-        }, 2000);
+        }, 1200); 
         document.getElementById('startBtn').innerText = "RUNNING...";
         document.getElementById('startBtn').disabled = true;
     }
 </script>
-
 </body>
 </html>
