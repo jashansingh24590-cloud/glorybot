@@ -6,35 +6,19 @@
     <title>FF GLORY BOT PRO 2026</title>
     <style>
         :root { --gold: #ffcc00; --red: #f85149; --green: #3fb950; --bg: #0d1117; --card: #161b22; }
-        body { background-color: #010409; color: white; font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 15px; }
+        body { background-color: #010409; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; text-align: center; }
         .container { max-width: 450px; margin: auto; }
-        
-        /* Universal Box Design */
         .glass-box { background: var(--card); border: 1px solid #30363d; border-radius: 16px; padding: 20px; margin-top: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
-        
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #30363d; background: #010409; color: white; box-sizing: border-box; font-size: 16px; }
-        
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #30363d; background: #010409; color: white; font-size: 16px; box-sizing: border-box; }
         .btn { width: 100%; padding: 14px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; margin-top: 10px; text-transform: uppercase; }
         .btn-gold { background: var(--gold); color: black; }
-        .btn-blue { background: #238636; color: white; border: 2px solid #2ea043; }
-        .btn-outline { background: transparent; border: 1px solid #30363d; color: #8b949e; }
-
-        /* Step Visibility */
+        .btn-blue { background: #007bff; color: white; border: 1px solid #0056b3; }
         #step2, #mainPanel { display: none; }
-
-        /* Dashboard Header */
-        .guild-header { display: flex; align-items: center; gap: 15px; border-bottom: 1px solid #30363d; padding-bottom: 15px; margin-bottom: 15px; }
-        .guild-icon { width: 60px; height: 60px; background: linear-gradient(45deg, #f0ad4e, #ffcc00); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 0 15px rgba(240,173,78,0.4); }
-        .guild-id-text { font-size: 18px; font-weight: bold; color: var(--gold); letter-spacing: 1px; }
-
-        /* Bot Status Card */
         .status-badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
         .bg-red { background: rgba(248,81,73,0.1); color: var(--red); border: 1px solid var(--red); }
         .bg-green { background: rgba(63,185,80,0.1); color: var(--green); border: 1px solid var(--green); }
-        .dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
-
-        .glory-display { font-size: 36px; font-weight: 900; color: var(--red); margin: 15px 0; text-shadow: 0 0 10px rgba(248,81,73,0.2); }
-        .credit-progress { background: #010409; height: 8px; border-radius: 4px; margin: 10px 0; overflow: hidden; }
+        .glory-display { font-size: 36px; font-weight: 900; color: var(--red); margin: 15px 0; }
+        .credit-progress { background: #010409; height: 10px; border-radius: 5px; margin: 10px 0; overflow: hidden; border: 1px solid #333; }
         #progressBar { background: var(--gold); width: 0%; height: 100%; transition: 0.5s; }
     </style>
 </head>
@@ -42,81 +26,100 @@
 
 <div class="container">
     <div id="step1" class="glass-box">
-        <h2 style="margin-top:0; color:var(--gold)">🔐 SECURE LOGIN</h2>
-        <p style="color:#8b949e; font-size:14px">Admin access required</p>
+        <h2 style="color:var(--gold)">🔐 SECURE LOGIN</h2>
         <input type="password" id="passInput" placeholder="Enter Password (rocck31)">
-        <button class="btn btn-gold" onclick="checkPass()">UNLOCK ACCESS</button>
+        <button class="btn btn-gold" onclick="checkPass()">LOGIN</button>
     </div>
 
     <div id="step2" class="glass-box">
-        <h2 style="margin-top:0;">🤖 BOT SETUP</h2>
+        <h2 style="color:var(--gold)">🤖 BOT SETUP</h2>
         <input type="number" id="guildInput" placeholder="Guild ID">
         <select id="regionSelect">
-            <option value="INDIA">REGION: INDIA 🇮🇳</option>
-            <option value="PAKISTAN">REGION: PAKISTAN 🇵🇰</option>
-            <option value="BANGLADESH">REGION: BANGLADESH 🇧🇩</option>
+            <option value="INDIA">INDIA 🇮🇳</option>
+            <option value="PAKISTAN">PAKISTAN 🇵🇰</option>
+            <option value="BANGLADESH">BANGLADESH 🇧🇩</option>
         </select>
-        <button class="btn btn-gold" onclick="showPanel()">ADD BOT TO SERVER</button>
+        <button class="btn btn-gold" onclick="showPanel()">ADD BOT</button>
     </div>
 
     <div id="mainPanel">
         <div class="glass-box">
-            <div class="guild-header">
-                <div class="guild-icon">🐯</div>
-                <div style="text-align:left">
-                    <div class="guild-id-text" id="dispID">ID: 000000</div>
-                    <div style="font-size:12px; color:#8b949e" id="dispReg">REGION: INDIA</div>
-                </div>
+            <div style="text-align:left; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px">
+                <div style="color:var(--gold); font-weight:bold; font-size:18px" id="dispID">ID: 000000</div>
+                <div style="font-size:12px; color:#888" id="dispReg">REGION: INDIA</div>
             </div>
 
-            <div id="statusBox" class="status-badge bg-red">
-                <span class="dot" style="background:var(--red)"></span> OFFLINE (NO CREDITS)
-            </div>
+            <div id="statusBox" class="status-badge bg-red">OFFLINE (WAIT FOR ADS)</div>
 
             <div style="text-align:left; margin: 15px 0;">
                 <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px">
-                    <span>REWARD PROGRESS</span>
+                    <span>CREDITS EARNED</span>
                     <span id="creditText">0/5 ADS</span>
                 </div>
                 <div class="credit-progress"><div id="progressBar"></div></div>
                 
-                <button id="adBtn" class="btn btn-blue" onclick="watchAd()">🎥 WATCH AD FOR CREDIT</button>
+                <button id="adBtn" class="btn btn-blue" onclick="startAdTimer()">🎥 WATCH AD FOR CREDIT</button>
             </div>
 
             <div class="glory-display">GLORY: +<span id="gloryCount">0</span></div>
 
             <div style="display: flex; gap: 10px;">
                 <button id="startBtn" class="btn btn-gold" style="opacity:0.3" disabled onclick="startBot()">START BOT</button>
-                <button class="btn btn-outline" onclick="location.reload()">STOP</button>
+                <button class="btn" style="background:#333; color:white;" onclick="location.reload()">STOP</button>
             </div>
-            <p style="font-size:11px; color:#444; margin-top:15px">Updated: 2026.03.27 | Version 4.0.1</p>
         </div>
     </div>
 </div>
 
 <script>
     let credits = 0;
+    let timerRunning = false;
 
     function checkPass() {
         if(document.getElementById('passInput').value === "rocck31") {
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
-        } else { alert("❌ Access Denied!"); }
+        } else { alert("Wrong Password!"); }
     }
 
     function showPanel() {
         let id = document.getElementById('guildInput').value;
-        if(id.length < 5) { alert("Invalid Guild ID"); return; }
+        if(id.length < 5) { alert("Invalid ID"); return; }
         document.getElementById('step2').style.display = 'none';
         document.getElementById('mainPanel').style.display = 'block';
         document.getElementById('dispID').innerText = "GUILD: " + id;
         document.getElementById('dispReg').innerText = "REGION: " + document.getElementById('regionSelect').value;
     }
 
-    function watchAd() {
-        // Open Adsterra
+    function startAdTimer() {
+        if(timerRunning) return;
+        
+        // Ad khulegi
         window.open("https://www.profitablecpmratenetwork.com/p5s7vaxh?key=f93ff42ae54f7959783331fe87345820", "_blank");
         
+        timerRunning = true;
+        let timeLeft = 30; // 30 seconds ka timer
+        let btn = document.getElementById('adBtn');
+        
+        btn.disabled = true;
+        btn.style.background = "#555";
+        
+        let countdown = setInterval(() => {
+            btn.innerText = "WAITING FOR AD... (" + timeLeft + "s)";
+            timeLeft--;
+            
+            if(timeLeft < 0) {
+                clearInterval(countdown);
+                timerRunning = false;
+                addCredit();
+                btn.disabled = false;
+                btn.style.background = "#007bff";
+                btn.innerText = "🎥 WATCH AD FOR CREDIT";
+            }
+        }, 1000);
+    }
+
+    function addCredit() {
         if(credits < 5) {
             credits++;
             let percent = (credits / 5) * 100;
@@ -127,15 +130,16 @@
         if(credits >= 5) {
             document.getElementById('startBtn').disabled = false;
             document.getElementById('startBtn').style.opacity = "1";
-            document.getElementById('adBtn').innerText = "ALL CREDITS UNLOCKED ✅";
-            document.getElementById('adBtn').style.background = "#30363d";
+            document.getElementById('adBtn').innerText = "CREDITS COLLECTED ✅";
+            document.getElementById('adBtn').disabled = true;
             document.getElementById('statusBox').className = "status-badge bg-green";
-            document.getElementById('statusBox').innerHTML = '<span class="dot" style="background:var(--green)"></span> READY TO LAUNCH';
+            document.getElementById('statusBox').innerText = "READY TO START";
         }
     }
 
     function startBot() {
-        document.getElementById('statusBox').innerHTML = '<span class="dot" style="background:var(--green)"></span> BOT RUNNING (ONLINE)';
+        document.getElementById('statusBox').className = "status-badge bg-green";
+        document.getElementById('statusBox').innerText = "RUNNING (ONLINE)";
         document.getElementById('startBtn').innerText = "ACTIVE...";
         document.getElementById('startBtn').disabled = true;
         
@@ -143,7 +147,7 @@
         setInterval(() => {
             glory += 1;
             document.getElementById('gloryCount').innerText = glory;
-        }, 1200); // 50 Glory per Minute speed
+        }, 1200); // 1 minute = 50 glory
     }
 </script>
 </body>
