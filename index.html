@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GLORY BOT PANEL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { background: #000; color: #0f0; font-family: sans-serif; text-align: center; padding: 20px; }
+        .box { border: 2px solid #0f0; padding: 20px; border-radius: 10px; max-width: 320px; margin: auto; background: #111; box-shadow: 0 0 15px #0f0; }
+        input { padding: 12px; margin: 10px 0; width: 85%; background: #000; border: 1px solid #0f0; color: #0f0; border-radius: 5px; outline: none; }
+        button { padding: 12px; background: #0f0; color: #000; border: none; cursor: pointer; font-weight: bold; width: 92%; border-radius: 5px; margin-top: 10px; }
+        #status { color: yellow; margin-top: 20px; font-size: 14px; border-top: 1px dashed #444; padding-top: 10px; }
+    </style>
+</head>
+<body>
+    <div id="loginPage" class="box">
+        <h2 style="color:red">SYSTEM LOCKED</h2>
+        <p>Enter Key:</p>
+        <input type="text" id="pass" placeholder="Hint: rock31">
+        <button onclick="check()">UNLOCK PANEL</button>
+    </div>
+
+    <div id="mainPage" class="box" style="display:none;">
+        <h2 style="color:lime">GLORY PANEL ACTIVE</h2>
+        <p>Credits: <span id="crd">0</span> | Tasks: 6/6</p>
+        <input type="number" id="uid" placeholder="Enter Guild UID">
+        <select id="reg" style="width:92%; padding:10px; background:#000; color:#0f0; border:1px solid #0f0; margin-bottom:10px;">
+            <option>INDIA (IND)</option>
+            <option>PAKISTAN (PAK)</option>
+            <option>BANGLADESH (BD)</option>
+        </select>
+        <button onclick="start()" style="background:red; color:white;">DEPLOY 4 BOTS (5 CR)</button>
+        <button onclick="getAd()" style="background:blue; color:white;">WATCH AD (+1 CREDIT)</button>
+        <div id="status">Status: Waiting for Command...</div>
+    </div>
+
+    <script>
+        function check() {
+            var p = document.getElementById("pass").value;
+            if (p === "rock31") {
+                document.getElementById("loginPage").style.display = "none";
+                document.getElementById("mainPage").style.display = "block";
+            } else { alert("Access Denied! Password galat hai."); }
+        }
+        var credits = 0;
+        function getAd() {
+            window.open("https://www.google.com", "_blank"); 
+            credits++;
+            document.getElementById("crd").innerHTML = credits;
+        }
+        function start() {
+            var u = document.getElementById("uid").value;
+            if(u == "") { alert("UID Dalo!"); return; }
+            if(credits < 5) { alert("Kam se kam 5 Credits chahiye!"); return; }
+            credits -= 5;
+            document.getElementById("crd").innerHTML = credits;
+            document.getElementById("status").innerHTML = "🔍 Scanning Server for UID: " + u;
+            setTimeout(() => { document.getElementById("status").innerHTML = "🛰️ Packets Sent... Waiting for Response"; }, 2000);
+            setTimeout(() => { document.getElementById("status").innerHTML = "✅ SUCCESS: 4 Bots Joined!"; }, 5000);
+        }
+    </script>
+</body>
+</html>
+
