@@ -3,151 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF GLORY BOT PRO 2026</title>
+    <title>FF GLORY BOT ULTRA 2026</title>
     <style>
-        :root { --gold: #ffcc00; --red: #f85149; --green: #3fb950; --bg: #0d1117; --card: #161b22; }
-        body { background-color: #010409; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; text-align: center; }
+        :root { --neon-gold: #ffcc00; --neon-red: #f85149; --neon-green: #3fb950; --dark: #010409; --card-bg: #161b22; }
+        body { background-color: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; overflow-x: hidden; }
         .container { max-width: 450px; margin: auto; }
-        .glass-box { background: var(--card); border: 1px solid #30363d; border-radius: 16px; padding: 20px; margin-top: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #30363d; background: #010409; color: white; font-size: 16px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 14px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; margin-top: 10px; text-transform: uppercase; }
-        .btn-gold { background: var(--gold); color: black; }
-        .btn-blue { background: #007bff; color: white; border: 1px solid #0056b3; }
+
+        /* Stylish Card */
+        .glass-panel { background: var(--card-bg); border: 1px solid #30363d; border-radius: 20px; padding: 25px; margin-top: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; overflow: hidden; }
+        .glass-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--neon-gold), var(--neon-red)); }
+
+        input, select { width: 100%; padding: 14px; margin: 12px 0; border-radius: 10px; border: 1px solid #30363d; background: #0d1117; color: white; font-size: 16px; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--neon-gold); box-shadow: 0 0 10px rgba(255,204,0,0.2); }
+
+        .btn { width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; font-size: 16px; text-transform: uppercase; transition: 0.3s; margin-top: 10px; letter-spacing: 1px; }
+        .btn-main { background: var(--neon-gold); color: black; box-shadow: 0 4px 15px rgba(255,204,0,0.3); }
+        .btn-ad { background: linear-gradient(45deg, #007bff, #00c6ff); color: white; margin-bottom: 5px; }
+        .btn-ad:disabled { background: #222; color: #555; cursor: not-allowed; border: 1px solid #333; }
+
         #step2, #mainPanel { display: none; }
-        .status-badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 10px; }
-        .bg-red { background: rgba(248,81,73,0.1); color: var(--red); border: 1px solid var(--red); }
-        .bg-green { background: rgba(63,185,80,0.1); color: var(--green); border: 1px solid var(--green); }
-        .glory-display { font-size: 36px; font-weight: 900; color: var(--red); margin: 15px 0; }
-        .credit-progress { background: #010409; height: 10px; border-radius: 5px; margin: 10px 0; overflow: hidden; border: 1px solid #333; }
-        #progressBar { background: var(--gold); width: 0%; height: 100%; transition: 0.5s; }
+
+        /* Dashboard Look */
+        .status-pill { display: inline-flex; align-items: center; padding: 6px 15px; border-radius: 30px; font-size: 11px; font-weight: bold; margin-bottom: 15px; letter-spacing: 0.5px; }
+        .offline { background: rgba(248,81,73,0.15); color: var(--neon-red); border: 1px solid var(--neon-red); }
+        .online { background: rgba(63,185,80,0.15); color: var(--neon-green); border: 1px solid var(--neon-green); }
+
+        .glory-box { font-size: 42px; font-weight: 900; color: var(--neon-red); margin: 20px 0; text-shadow: 0 0 20px rgba(248,81,73,0.3); }
+        
+        /* Progress Bar */
+        .progress-container { background: #0d1117; height: 12px; border-radius: 6px; margin: 15px 0; border: 1px solid #333; overflow: hidden; }
+        #bar { width: 0%; height: 100%; background: var(--neon-gold); transition: 0.4s; box-shadow: 0 0 10px var(--neon-gold); }
+        .timer-txt { font-size: 12px; color: var(--neon-gold); font-weight: bold; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="step1" class="glass-box">
-        <h2 style="color:var(--gold)">🔐 SECURE LOGIN</h2>
-        <input type="password" id="passInput" placeholder="Enter Password (rocck31)">
-        <button class="btn btn-gold" onclick="checkPass()">LOGIN</button>
+    <div id="step1" class="glass-panel">
+        <h2 style="color:var(--neon-gold); margin-top:0;">SYSTEM LOGIN</h2>
+        <input type="password" id="pBox" placeholder="Enter Access Code">
+        <button class="btn btn-main" onclick="verifyP()">AUTHENTICATE</button>
     </div>
 
-    <div id="step2" class="glass-box">
-        <h2 style="color:var(--gold)">🤖 BOT SETUP</h2>
-        <input type="number" id="guildInput" placeholder="Guild ID">
-        <select id="regionSelect">
-            <option value="INDIA">INDIA 🇮🇳</option>
-            <option value="PAKISTAN">PAKISTAN 🇵🇰</option>
-            <option value="BANGLADESH">BANGLADESH 🇧🇩</option>
+    <div id="step2" class="glass-panel">
+        <h2 style="color:var(--neon-gold); margin-top:0;">BOT CONFIG</h2>
+        <input type="number" id="gBox" placeholder="Guild ID">
+        <select id="rBox">
+            <option value="INDIA">REGION: INDIA 🇮🇳</option>
+            <option value="PAKISTAN">REGION: PAKISTAN 🇵🇰</option>
+            <option value="BANGLADESH">REGION: BANGLADESH 🇧🇩</option>
         </select>
-        <button class="btn btn-gold" onclick="showPanel()">ADD BOT</button>
+        <button class="btn btn-main" onclick="loadBot()">CONNECT GUILD</button>
     </div>
 
-    <div id="mainPanel">
-        <div class="glass-box">
-            <div style="text-align:left; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px">
-                <div style="color:var(--gold); font-weight:bold; font-size:18px" id="dispID">ID: 000000</div>
-                <div style="font-size:12px; color:#888" id="dispReg">REGION: INDIA</div>
+    <div id="mainPanel" class="glass-panel">
+        <div style="text-align:left; border-bottom:1px solid #333; padding-bottom:15px; margin-bottom:15px;">
+            <div id="idShow" style="color:var(--neon-gold); font-size:20px; font-weight:900;">ID: 000000</div>
+            <div id="regShow" style="font-size:12px; color:#8b949e; margin-top:3px;">REGION: INDIA</div>
+        </div>
+
+        <div id="statTag" class="status-pill offline">● BOT DISCONNECTED</div>
+
+        <div style="text-align:left;">
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;">
+                <span id="timerLabel">READY TO EARN</span>
+                <span id="cLabel">0/5 CREDITS</span>
             </div>
+            <div class="progress-container"><div id="bar"></div></div>
+            
+            <button id="adBtn" class="btn btn-ad" onclick="startVerification()">🎥 WATCH AD TO UNLOCK</button>
+        </div>
 
-            <div id="statusBox" class="status-badge bg-red">OFFLINE (WAIT FOR ADS)</div>
+        <div class="glory-box">+<span id="gCount">0</span></div>
 
-            <div style="text-align:left; margin: 15px 0;">
-                <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px">
-                    <span>CREDITS EARNED</span>
-                    <span id="creditText">0/5 ADS</span>
-                </div>
-                <div class="credit-progress"><div id="progressBar"></div></div>
-                
-                <button id="adBtn" class="btn btn-blue" onclick="startAdTimer()">🎥 WATCH AD FOR CREDIT</button>
-            </div>
-
-            <div class="glory-display">GLORY: +<span id="gloryCount">0</span></div>
-
-            <div style="display: flex; gap: 10px;">
-                <button id="startBtn" class="btn btn-gold" style="opacity:0.3" disabled onclick="startBot()">START BOT</button>
-                <button class="btn" style="background:#333; color:white;" onclick="location.reload()">STOP</button>
-            </div>
+        <div style="display:flex; gap:10px;">
+            <button id="sBtn" class="btn btn-main" style="opacity:0.2" disabled onclick="runBot()">START</button>
+            <button class="btn" style="background:#222; color:white;" onclick="location.reload()">STOP</button>
         </div>
     </div>
 </div>
 
 <script>
     let credits = 0;
-    let timerRunning = false;
+    let isVerifying = false;
 
-    function checkPass() {
-        if(document.getElementById('passInput').value === "rocck31") {
+    function verifyP() {
+        if(document.getElementById('pBox').value === "rocck31") {
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
-        } else { alert("Wrong Password!"); }
+        } else { alert("Access Denied!"); }
     }
 
-    function showPanel() {
-        let id = document.getElementById('guildInput').value;
-        if(id.length < 5) { alert("Invalid ID"); return; }
+    function loadBot() {
+        let val = document.getElementById('gBox').value;
+        if(val.length < 5) return alert("Invalid Guild ID");
         document.getElementById('step2').style.display = 'none';
         document.getElementById('mainPanel').style.display = 'block';
-        document.getElementById('dispID').innerText = "GUILD: " + id;
-        document.getElementById('dispReg').innerText = "REGION: " + document.getElementById('regionSelect').value;
+        document.getElementById('idShow').innerText = "GUILD ID: " + val;
+        document.getElementById('regShow').innerText = "REGION: " + document.getElementById('rBox').value;
     }
 
-    function startAdTimer() {
-        if(timerRunning) return;
+    function startVerification() {
+        if(isVerifying) return;
         
-        // Ad khulegi
-        window.open("https://www.profitablecpmratenetwork.com/p5s7vaxh?key=f93ff42ae54f7959783331fe87345820", "_blank");
+        // Open Ad Tab
+        let adTab = window.open("https://www.profitablecpmratenetwork.com/p5s7vaxh?key=f93ff42ae54f7959783331fe87345820", "_blank");
         
-        timerRunning = true;
-        let timeLeft = 30; // 30 seconds ka timer
+        isVerifying = true;
+        let timeLeft = 15; // 15 Seconds Hard Wait
         let btn = document.getElementById('adBtn');
-        
         btn.disabled = true;
-        btn.style.background = "#555";
-        
-        let countdown = setInterval(() => {
-            btn.innerText = "WAITING FOR AD... (" + timeLeft + "s)";
+
+        let clock = setInterval(() => {
+            btn.innerText = "VERIFYING AD... " + timeLeft + "s";
             timeLeft--;
-            
+
             if(timeLeft < 0) {
-                clearInterval(countdown);
-                timerRunning = false;
-                addCredit();
+                clearInterval(clock);
+                isVerifying = false;
+                credits++;
+                updateProgress();
                 btn.disabled = false;
-                btn.style.background = "#007bff";
-                btn.innerText = "🎥 WATCH AD FOR CREDIT";
+                btn.innerText = "🎥 WATCH AD TO UNLOCK";
             }
         }, 1000);
     }
 
-    function addCredit() {
-        if(credits < 5) {
-            credits++;
-            let percent = (credits / 5) * 100;
-            document.getElementById('progressBar').style.width = percent + "%";
-            document.getElementById('creditText').innerText = credits + "/5 ADS";
-        }
+    function updateProgress() {
+        let p = (credits / 5) * 100;
+        document.getElementById('bar').style.width = p + "%";
+        document.getElementById('cLabel').innerText = credits + "/5 CREDITS";
 
         if(credits >= 5) {
-            document.getElementById('startBtn').disabled = false;
-            document.getElementById('startBtn').style.opacity = "1";
-            document.getElementById('adBtn').innerText = "CREDITS COLLECTED ✅";
-            document.getElementById('adBtn').disabled = true;
-            document.getElementById('statusBox').className = "status-badge bg-green";
-            document.getElementById('statusBox').innerText = "READY TO START";
+            document.getElementById('adBtn').style.display = 'none';
+            document.getElementById('sBtn').disabled = false;
+            document.getElementById('sBtn').style.opacity = "1";
+            document.getElementById('statTag').className = "status-pill online";
+            document.getElementById('statTag').innerText = "● READY TO START";
         }
     }
 
-    function startBot() {
-        document.getElementById('statusBox').className = "status-badge bg-green";
-        document.getElementById('statusBox').innerText = "RUNNING (ONLINE)";
-        document.getElementById('startBtn').innerText = "ACTIVE...";
-        document.getElementById('startBtn').disabled = true;
-        
-        let glory = 0;
-        setInterval(() => {
-            glory += 1;
-            document.getElementById('gloryCount').innerText = glory;
-        }, 1200); // 1 minute = 50 glory
+    function runBot() {
+        document.getElementById('statTag').innerText = "● BOT RUNNING (LIVE)";
+        document.getElementById('sBtn').innerText = "ONLINE";
+        document.getElementById('sBtn').disabled = true;
+        let g = 0;
+        setInterval(() => { g++; document.getElementById('gCount').innerText = g; }, 1200); // 50 Glory/Min
     }
 </script>
 </body>
